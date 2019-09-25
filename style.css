@@ -1,0 +1,47 @@
+body{
+	margin: 0;
+	font-family: 'Lato';font-size: 22px;
+}
+.cover {
+	background-image: url("cover.jpeg");
+	height: 400px;
+}
+.logo{
+	height: 100px;
+	margin: 20px;
+}
+.tagline{
+	color: white;
+	font-size: 28px;
+	/*text-shadow: 2px 2px #000000;*/
+	background-color: rgba(0, 0, 0, 0.5);
+	display: inline-block;
+}
+.city-select{
+	
+}
+
+input[type=text], select {
+  width: 20%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 8%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+a:hover{
+  text-decoration: none;
+}
