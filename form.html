@@ -112,14 +112,15 @@
 <body>
 	<div class="form">
 		<h1>User Registration Form</h1>
-		<form action="" method="post" enctype="multipart/form-data">
+		<p id="errors">&nbsp</p>
+		<form action="" method="post" enctype="multipart/form-data" id="myForm">
 			<div id="name">
 				<div id="fnamediv">
 					<div class="p30">
 						<label for="fname">First Name:</label>
 					</div>
 					<div class="p70">
-						<input type="text" id="fname" name="firstname" placeholder="First name..">
+						<input type="text" id="fname" name="firstname" placeholder="First name.." required>
 					</div>
 				</div>
 				<div id="lnamediv">
@@ -127,7 +128,7 @@
 						<label for="lname">Last Name:</label>
 					</div>
 					<div class="p70">
-						<input type="text" id="lname" name="lastname" placeholder="Last name..">
+						<input type="text" id="lname" name="lastname" placeholder="Last name.." required>
 					</div>
 				</div>
 			</div>
@@ -156,7 +157,7 @@
 						<label for="age">Age:</label>
 					</div>
 					<div class="p70 age">
-						<input type="age" name="age" id="age" placeholder="Age.." min="10" max="99">
+						<input type="age" name="age" id="age" placeholder="Age.." min="10" max="99" required>
 					</div>
 				</div>
 			</div>
@@ -166,7 +167,7 @@
 						<label for="phone">Phone Number:</label>
 					</div>
 					<div class="p70">
-						<input type="tel" name="phone" id="phone" placeholder="Phone number.." maxlength="10">
+						<input type="tel" name="phone" id="phone" placeholder="Phone number.." maxlength="10" required>
 					</div>
 				</div>
 				<div id="emaildiv">
@@ -174,7 +175,7 @@
 						<label for="email">Email ID:</label>
 					</div>
 					<div class="p70">
-						<input type="email" id="email" name="email" placeholder="Email ID..">
+						<input type="email" id="email" name="email" placeholder="Email ID.." required>
 					</div>
 				</div>
 			</div>
@@ -184,15 +185,15 @@
 						<label for="password">Password:</label>
 					</div>
 					<div class="p70">
-						<input type="password" id="password" name="password" placeholder="Password..">
+						<input type="password" id="password" name="password" placeholder="Password.." required>
 					</div>
 				</div>
 				<div id="passworddiv">
 					<div class="p30">
-						<label for="password">Re-enter Password:</label>
+						<label for="password2">Re-enter Password:</label>
 					</div>
 					<div class="p70">
-						<input type="password" id="password" name="password" placeholder="Re-enter password..">
+						<input type="password" id="password2" name="password2" placeholder="Re-enter password.." required>
 					</div>
 				</div>
 			</div>
@@ -202,7 +203,7 @@
 					<label for="address">Address:</label>
 					</div>
 					<div class="p70">
-					<textarea rows="5" id="address" name="address" placeholder="Enter address.."></textarea>
+					<textarea rows="5" id="address" name="address" placeholder="Enter address.." required></textarea>
 					</div>
 				</div>
 				<div id="fileuploaddiv">
@@ -228,12 +229,58 @@
 			<div>
 				<center>
 					<div class="buttons">
-						<button type="submit" name="submit" id="submit">Submit</button>
-						<button type="reset" name="reset" id="reset">Clear</button>
+						<button type="button" name="btnSubmit" id="btnSubmit" onclick="verifyData()">Submit</button>
+						<button type="reset" name="reset" id="reset" onclick='document.getElementById("errors").innerHTML = "&nbsp"'>Clear</button>
 					</div>
 				</center>
 			</div>
 		</form>
 	</div>
+
+	<script type="text/javascript">
+		function verifyData(){
+			var age = document.getElementById("age").value;
+			if(age<10||age>99){
+				document.getElementById("age").style.background = "#ffcccc";
+				document.getElementById("errors").innerHTML = "<font color='red'><center>Please enter a valid age.</center></font>"
+				setTimeout(function(){document.getElementById("age").style.background = "white";
+					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				//setTimeout(function () {window.alert("Please enter a valid age.");}, 800);
+			} else if(document.getElementById("password").value!=document.getElementById("password2").value){
+				document.getElementById("password2").style.background = "#ffcccc";
+				document.getElementById("errors").innerHTML = "<font color='red'><center>The passwords do not match.</center></font>"
+				setTimeout(function(){document.getElementById("password2").style.background = "white";
+					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				//window.alert("The passwords do not match.");
+			} else if(document.getElementById("phone").value<1000000000){
+				document.getElementById("phone").style.background = "#ffcccc";
+				document.getElementById("errors").innerHTML = "<font color='red'><center>The phone number doesn't seem to be right.</center></font>"
+				setTimeout(function(){document.getElementById("phone").style.background = "white";
+					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				//window.alert("The phone number doesn't seem to be right.");
+			} else if(document.getElementById("male").checked==false && document.getElementById("female").checked==false && document.getElementById("other").checked==false){
+				document.getElementById("errors").innerHTML = "<font color='red'><center>Please select a gender.</center></font>"
+				setTimeout(function(){document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				//window.alert("Please select a gender.");
+			} else if(document.getElementById("programming").checked==false && document.getElementById("designing").checked==false){
+				document.getElementById("errors").innerHTML = "<font color='red'><center>You need to choose at least one passion to be eligible.</center></font>"
+				setTimeout(function(){document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				//window.alert("You need to choose at least one passion to be eligible.");
+			} else if(document.getElementById("address").value.length<2){
+				document.getElementById("address").style.background = "#ffcccc";
+				document.getElementById("errors").innerHTML = "<font color='red'><center>Please enter a valid address.</center></font>"
+				setTimeout(function(){document.getElementById("address").style.background = "white";
+					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				//window.alert("Please enter a valid address.");
+			} else if(document.getElementById("password").value.length<6){
+				document.getElementById("password").style.background = "#ffcccc";
+				document.getElementById("errors").innerHTML = "<font color='red'><center>The password must contain at least 6 characters.</center></font>"
+				setTimeout(function(){document.getElementById("password").style.background = "white";
+					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+			} else {
+				document.getElementById("myForm").submit();
+			}
+		}
+	</script>
 </body>
 </html>
