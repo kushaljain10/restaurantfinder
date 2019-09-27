@@ -238,46 +238,42 @@
 	</div>
 
 	<script type="text/javascript">
+		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+		var onlyAlpha = /^[a-z]+$/i;
+
+		function displayError(chk, elementName, msg){
+			document.getElementById("errors").innerHTML = "<font color='red'><center>"+msg+"</center></font>";
+			if(chk==1){
+				document.getElementById(elementName).style.background = "#ffcccc";
+				setTimeout(function(){document.getElementById(elementName).style.background = "white";}, 1000);
+			}
+		}
+
 		function verifyData(){
-			var age = document.getElementById("age").value;
-			if(age<10||age>99){
-				document.getElementById("age").style.background = "#ffcccc";
-				document.getElementById("errors").innerHTML = "<font color='red'><center>Please enter a valid age.</center></font>"
-				setTimeout(function(){document.getElementById("age").style.background = "white";
-					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
-				//setTimeout(function () {window.alert("Please enter a valid age.");}, 800);
-			} else if(document.getElementById("password").value!=document.getElementById("password2").value){
-				document.getElementById("password2").style.background = "#ffcccc";
-				document.getElementById("errors").innerHTML = "<font color='red'><center>The passwords do not match.</center></font>"
-				setTimeout(function(){document.getElementById("password2").style.background = "white";
-					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
-				//window.alert("The passwords do not match.");
-			} else if(document.getElementById("phone").value<1000000000){
-				document.getElementById("phone").style.background = "#ffcccc";
-				document.getElementById("errors").innerHTML = "<font color='red'><center>The phone number doesn't seem to be right.</center></font>"
-				setTimeout(function(){document.getElementById("phone").style.background = "white";
-					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
-				//window.alert("The phone number doesn't seem to be right.");
+			if(document.getElementById("fname").value==""){
+				displayError(1, "fname", "Please enter your first name.");
+			} else if(!document.getElementById("fname").value.match(onlyAlpha)){
+				displayError(1, "fname", "Please enter a valid first name.");
 			} else if(document.getElementById("male").checked==false && document.getElementById("female").checked==false && document.getElementById("other").checked==false){
-				document.getElementById("errors").innerHTML = "<font color='red'><center>Please select a gender.</center></font>"
-				setTimeout(function(){document.getElementById("errors").innerHTML = '&nbsp'}, 500);
-				//window.alert("Please select a gender.");
-			} else if(document.getElementById("programming").checked==false && document.getElementById("designing").checked==false){
-				document.getElementById("errors").innerHTML = "<font color='red'><center>You need to choose at least one passion to be eligible.</center></font>"
-				setTimeout(function(){document.getElementById("errors").innerHTML = '&nbsp'}, 500);
-				//window.alert("You need to choose at least one passion to be eligible.");
-			} else if(document.getElementById("address").value.length<2){
-				document.getElementById("address").style.background = "#ffcccc";
-				document.getElementById("errors").innerHTML = "<font color='red'><center>Please enter a valid address.</center></font>"
-				setTimeout(function(){document.getElementById("address").style.background = "white";
-					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
-				//window.alert("Please enter a valid address.");
+				displayError(0, "Pseudonym", "Please select a gender.");
+			} else if(document.getElementById("age").value<10||document.getElementById("age").value>99||document.getElementById("age").value==""){
+				displayError(1, "age", "Please enter a valid age.");
+			} else if(document.getElementById("phone").value<1000000000){
+				displayError(1, "phone", "The phone number doesn't seem to be right.");
+			} else if(document.getElementById("email").value==""){
+				displayError(1, "email", "Please enter an email ID.");
+			} else if(!document.getElementById("email").value.match(mailformat)){
+				displayError(1, "email", "Please enter a valid email ID.");
 			} else if(document.getElementById("password").value.length<6){
-				document.getElementById("password").style.background = "#ffcccc";
-				document.getElementById("errors").innerHTML = "<font color='red'><center>The password must contain at least 6 characters.</center></font>"
-				setTimeout(function(){document.getElementById("password").style.background = "white";
-					document.getElementById("errors").innerHTML = '&nbsp'}, 500);
+				displayError(1, "password", "The password must contain at least 6 characters.");
+			} else if(document.getElementById("password").value!=document.getElementById("password2").value){
+				displayError(1, "password2", "The passwords do not match.");
+			} else if(document.getElementById("address").value.length<2){
+				displayError(1, "address", "Please enter a valid address.");
+			} else if(document.getElementById("programming").checked==false && document.getElementById("designing").checked==false){
+				displayError(0, "Pseudonym", "You need to choose at least one passion to be eligible.");
 			} else {
+				document.getElementById("errors").innerHTML = '&nbsp';
 				document.getElementById("myForm").submit();
 			}
 		}
